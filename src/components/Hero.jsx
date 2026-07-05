@@ -1,0 +1,545 @@
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Github, Linkedin, Mail, ChevronDown, Sparkles, Rocket } from 'lucide-react';
+
+const Hero = () => {
+  // Word animation states
+  const [displayText, setDisplayText] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState([]);
+  const [floatingText, setFloatingText] = useState([]);
+  const [glowIntensity, setGlowIntensity] = useState(0);
+  
+  // ✅ Words with proper spaces
+  const words = useMemo(() => ['RANA', 'AMIR', 'SHAHZAD'], []);
+  
+  const sectionRef = useRef(null);
+  const canvasRef = useRef(null);
+  
+  // Element visibility states
+  const [showHello, setShowHello] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
+  const [showSocial, setShowSocial] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [showArrow, setShowArrow] = useState(false);
+  const [showParticles, setShowParticles] = useState(false);
+
+  const wordIntervalRef = useRef(null);
+  const animationTimeoutRef = useRef(null);
+
+  // ✨ GENERATE PARTICLES
+  useEffect(() => {
+    const newParticles = [];
+    for (let i = 0; i < 100; i++) {
+      newParticles.push({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 4 + 1,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.1,
+        color: `hsl(${Math.random() * 60 + 200}, 70%, 50%)`,
+      });
+    }
+    setParticles(newParticles);
+
+    const newFloatingText = [];
+    const textWords = ['✦', '★', '◆', '◈', '✧', '✦', '★', '◆'];
+    for (let i = 0; i < 20; i++) {
+      newFloatingText.push({
+        char: textWords[Math.floor(Math.random() * textWords.length)],
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 20 + 10,
+        speed: Math.random() * 0.5 + 0.1,
+        delay: Math.random() * 5,
+        opacity: Math.random() * 0.3 + 0.1,
+      });
+    }
+    setFloatingText(newFloatingText);
+  }, []);
+
+  // ✨ MOUSE TRACKING
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const rect = sectionRef.current?.getBoundingClientRect();
+      if (rect) {
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        setMousePosition({ x, y });
+        setGlowIntensity(Math.max(0, 1 - Math.abs(x - 50) / 50));
+      }
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // ✨ CANVAS PARTICLE SYSTEM
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animationId;
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const drawParticles = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p, i) => {
+        const x = (p.x / 100) * canvas.width;
+        const y = (p.y / 100) * canvas.height;
+        const size = p.size * (1 + Math.sin(Date.now() / 1000 + i) * 0.3);
+        
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity * (0.8 + Math.sin(Date.now() / 2000 + i) * 0.2);
+        ctx.fill();
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = p.color;
+        
+        p.x += p.speedX * 0.5;
+        p.y += p.speedY * 0.5;
+        if (p.x > 100) p.x = 0;
+        if (p.x < 0) p.x = 100;
+        if (p.y > 100) p.y = 0;
+        if (p.y < 0) p.y = 100;
+      });
+      
+      animationId = requestAnimationFrame(drawParticles);
+    };
+    
+    drawParticles();
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, [particles]);
+
+  // ✨ RENDER WORDS FUNCTION - With proper spacing
+  const renderWords = () => {
+    const parts = displayText.split(' ');
+    return parts.map((word, index) => {
+      const isLastWord = word === 'SHAHZAD';
+      return (
+        <span 
+          key={index} 
+          className={`${isLastWord ? 'gradient-text-3d' : 'text-white'} inline-block`}
+          style={{ 
+            animationDelay: `${index * 0.3}s`,
+            marginRight: index < parts.length - 1 ? '0.5rem' : '0',
+          }}
+        >
+          {word}
+        </span>
+      );
+    });
+  };
+
+  // ✨ RESET ANIMATIONS
+  const resetAllAnimations = () => {
+    setDisplayText('');
+    setShowCursor(true);
+    setIsVisible(false);
+    setShowHello(false);
+    setShowSubtitle(false);
+    setShowDescription(false);
+    setShowButtons(false);
+    setShowSocial(false);
+    setShowImage(false);
+    setShowArrow(false);
+    setShowParticles(false);
+    
+    if (wordIntervalRef.current) {
+      clearInterval(wordIntervalRef.current);
+      wordIntervalRef.current = null;
+    }
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+      animationTimeoutRef.current = null;
+    }
+  };
+
+  // ✨ START WORD ANIMATION - With proper spaces
+  const startWordAnimation = useCallback(() => {
+    let index = 0;
+    let currentText = '';
+    
+    if (wordIntervalRef.current) {
+      clearInterval(wordIntervalRef.current);
+      wordIntervalRef.current = null;
+    }
+    
+    wordIntervalRef.current = setInterval(() => {
+      if (index < words.length) {
+        // ✅ Adding space between words
+        currentText = currentText 
+          ? `${currentText} ${words[index]}` 
+          : words[index];
+        setDisplayText(currentText);
+        index++;
+      } else {
+        if (wordIntervalRef.current) {
+          clearInterval(wordIntervalRef.current);
+          wordIntervalRef.current = null;
+        }
+        
+        const cursorTimer = setInterval(() => {
+          setShowCursor(prev => !prev);
+        }, 500);
+        
+        setTimeout(() => setShowSubtitle(true), 200);
+        setTimeout(() => setShowDescription(true), 500);
+        setTimeout(() => setShowButtons(true), 800);
+        setTimeout(() => setShowSocial(true), 1100);
+        setTimeout(() => setShowArrow(true), 1400);
+        setTimeout(() => setShowParticles(true), 1600);
+        
+        animationTimeoutRef.current = cursorTimer;
+      }
+    }, 600);
+  }, [words]);
+
+  // ✨ START ALL ANIMATIONS
+  const startAllAnimations = useCallback(() => {
+    resetAllAnimations();
+    
+    animationTimeoutRef.current = setTimeout(() => {
+      setIsVisible(true);
+      setShowHello(true);
+      
+      setTimeout(() => {
+        startWordAnimation();
+      }, 400);
+      
+      setTimeout(() => {
+        setShowImage(true);
+      }, 600);
+      
+    }, 100);
+  }, [startWordAnimation]);
+
+  // ✨ INTERSECTION OBSERVER
+  useEffect(() => {
+    const currentSection = sectionRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startAllAnimations();
+          } else {
+            resetAllAnimations();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    if (currentSection) observer.observe(currentSection);
+    return () => {
+      if (currentSection) observer.unobserve(currentSection);
+      if (wordIntervalRef.current) clearInterval(wordIntervalRef.current);
+      if (animationTimeoutRef.current) clearTimeout(animationTimeoutRef.current);
+    };
+  }, [startAllAnimations]);
+
+  // ✨ HASH CHANGE LISTENER
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '' || window.location.hash === '#home') {
+        resetAllAnimations();
+        setTimeout(() => {
+          if (sectionRef.current) {
+            const rect = sectionRef.current.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              startAllAnimations();
+            }
+          }
+        }, 200);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [startAllAnimations]);
+
+  return (
+    <section 
+      id="home" 
+      ref={sectionRef}
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-950 pt-20 md:pt-28"
+      style={{
+        perspective: '1000px',
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* ✨ CANVAS PARTICLE SYSTEM */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+      
+      {/* ✨ 3D ROTATING GLOW ORB */}
+      <div 
+        className="absolute w-96 h-96 rounded-full blur-3xl opacity-30 animate-pulse"
+        style={{
+          background: 'radial-gradient(circle, rgba(59,130,246,0.3), rgba(139,92,246,0.1))',
+          top: `${mousePosition.y - 20}%`,
+          left: `${mousePosition.x - 20}%`,
+          transform: `translate(-50%, -50%) scale(${1 + glowIntensity * 0.5})`,
+          transition: 'all 0.3s ease-out',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* ✨ FLOATING TEXT PARTICLES */}
+      {floatingText.map((item, i) => (
+        <div
+          key={i}
+          className="absolute pointer-events-none text-primary-400/20 select-none"
+          style={{
+            left: `${item.x}%`,
+            top: `${item.y + Math.sin(Date.now() / 2000 + item.delay) * 5}%`,
+            fontSize: `${item.size}px`,
+            opacity: item.opacity * (0.5 + Math.sin(Date.now() / 1000 + i) * 0.5),
+            transform: `rotate(${Math.sin(Date.now() / 3000 + i) * 360}deg)`,
+            transition: 'all 2s ease-in-out',
+          }}
+        >
+          {item.char}
+        </div>
+      ))}
+
+      {/* ✨ MAIN CONTENT */}
+      <div className="container-custom relative z-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12 mt-4 md:mt-8">
+          
+          {/* LEFT CONTENT */}
+          <div className="flex-1 text-center md:text-left hero-content">
+            
+            {/* ✨ HELLO TEXT */}
+            <div className="overflow-hidden relative mb-3">
+              <p className={`text-primary-400 text-lg md:text-xl font-semibold 
+                transition-all duration-700 ${showHello ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                flex items-center gap-2 hello-text`}>
+                <Sparkles className={`w-5 h-5 animate-pulse ${showHello ? 'opacity-100' : 'opacity-0'}`} />
+                <span>👋 Hello, I'm</span>
+              </p>
+            </div>
+
+            {/* ✨ NAME - With proper spacing */}
+            <div className="min-h-[4rem] md:min-h-[5rem] relative name-section">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                {displayText ? (
+                  <>
+                    {renderWords()}
+                    <span className={`inline-block w-1 h-10 md:h-12 bg-primary-400 ml-1 
+                      ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100
+                      animate-pulse`}>
+                    </span>
+                  </>
+                ) : (
+                  // ✅ Initial placeholder with proper spaces
+                  <span className="text-white tracking-wide">
+                    RANA AMIR SHAHZAD
+                  </span>
+                )}
+              </h1>
+              <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary-500 to-purple-500 
+                transition-all duration-1000 ${isVisible ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
+                style={{ transitionDelay: '2s' }} />
+            </div>
+
+            {/* ✨ SUBTITLE */}
+            <div className={`overflow-hidden transition-all duration-700 
+              ${showSubtitle ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl text-gray-300 mb-6 flex items-center gap-3">
+                <Rocket className={`w-6 h-6 text-primary-400 ${showSubtitle ? 'animate-bounce' : 'opacity-0'}`} />
+                <span>Software Engineering  | Frontend Developer</span>
+              </h2>
+            </div>
+
+            {/* ✨ DESCRIPTION */}
+            <div className={`overflow-hidden transition-all duration-700 
+              ${showDescription ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              <p className="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                <span className="text-primary-400 font-semibold">🎓 Software Engineering student </span> 
+                and <span className="text-purple-400">aspiring Full Stack Developer </span> 
+                with a passion for building <span className="text-cyan-400">scalable web solutions</span>.
+                <br /><br />
+                <span className="text-gray-400">
+                  💡 Proficient in <span className="text-cyan-400">React</span>, 
+                  <span className="text-pink-400"> JavaScript</span>, and 
+                  <span className="text-green-400"> Python</span>. 
+                  <span className="text-gray-500"> Always eager to learn and innovate.</span>
+                </span>
+                <br /><br />
+                <span className="text-yellow-400 font-semibold animate-pulse inline-block">
+                  ✨ Actively seeking internship opportunities ✨
+                </span>
+                <br />
+                <span className="text-gray-500 text-sm">
+                  to kick start my professional journey in the tech industry.
+                </span>
+              </p>
+            </div>
+
+            {/* ✨ INTERNSHIP BADGE */}
+            <div className={`mb-6 transition-all duration-700 delay-1000 
+              ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 
+                border border-yellow-500/30 rounded-full animate-pulse">
+                <Sparkles className="w-4 h-4 text-yellow-400" />
+                <span className="text-yellow-400 text-sm font-medium">🌟 Open to Internship Opportunities</span>
+              </div>
+            </div>
+
+            {/* ✨ BUTTONS */}
+            <div className={`flex flex-wrap gap-4 justify-center md:justify-start transition-all duration-700 
+              ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              <a
+                href="#projects"
+                className="group relative px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-500 
+                  rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl 
+                  hover:shadow-primary-500/50 overflow-hidden"
+              >
+                <span className="relative z-10">View My Work</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                  -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              </a>
+              <a
+                href="#contact"
+                className="group relative px-8 py-3 border-2 border-gray-600 hover:border-primary-500 
+                  rounded-lg transition-all duration-300 hover:scale-110 hover:bg-dark-800/50
+                  overflow-hidden"
+              >
+                <span className="relative z-10">Hire Me</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-purple-500/10 
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </a>
+            </div>
+
+            {/* ✨ SOCIAL LINKS */}
+            <div className={`flex gap-4 mt-8 justify-center md:justify-start transition-all duration-700 
+              ${showSocial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              {[
+                { icon: Github, link: 'https://github.com/Amire4/dashboard', label: 'GitHub' },
+                { icon: Linkedin, link: 'https://www.linkedin.com/in/rana-amir-shahzad-899506408', label: 'LinkedIn' },
+                { icon: Mail, link: 'mailto:ranaamirshahzad@gmail.com', label: 'Email' },
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative p-3 bg-dark-800/50 hover:bg-primary-600 rounded-full 
+                    transition-all duration-300 hover:scale-125 hover:rotate-12 
+                    hover:shadow-2xl hover:shadow-primary-500/50"
+                >
+                  <item.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-gray-400 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                    {item.label}
+                  </span>
+                  <span className="absolute inset-0 rounded-full border-2 border-primary-500/50 
+                    scale-0 group-hover:scale-150 opacity-0 group-hover:opacity-100 
+                    transition-all duration-500" />
+                </a>
+              ))}
+            </div>
+
+            {/* ✨ SKILLS TAGS */}
+            <div className={`flex flex-wrap gap-2 mt-6 justify-center md:justify-start transition-all duration-700 delay-800
+              ${showSocial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
+              {['React', 'JavaScript', 'Python', 'Tailwind CSS', 'Node.js', 'MongoDB'].map((skill, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 text-xs bg-dark-800/50 text-gray-400 rounded-full 
+                    border border-gray-700/30 hover:border-primary-500/50 hover:text-primary-400 
+                    transition-all duration-300 hover:scale-105 cursor-default"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* ✨ RIGHT - PROFILE IMAGE */}
+          <div className={`flex-1 flex justify-center transition-all duration-1000 
+            ${showImage ? 'opacity-100 scale-100' : 'opacity-0 scale-90'} mt-4 md:mt-0`}>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full 
+                blur-3xl opacity-30 animate-pulse scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-full 
+                blur-2xl opacity-20 animate-pulse scale-125" style={{ animationDelay: '2s' }} />
+              
+              <div className="absolute inset-[-8px] rounded-full border-2 border-primary-500/20 
+                animate-spin-slow" />
+              <div className="absolute inset-[-16px] rounded-full border-2 border-purple-500/20 
+                animate-spin-slower" />
+              
+              <img
+                src="/images/profile 1.jpg"
+                alt="Rana Amir Shahzad"
+                className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 
+                  rounded-full object-cover border-4 border-primary-500/30 
+                  group-hover:border-primary-500/60 transition-all duration-500 
+                  group-hover:scale-105 group-hover:rotate-3
+                  shadow-2xl shadow-primary-500/20"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/400x400/1e293b/60a5fa?text=Rana+Amir';
+                }}
+              />
+
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1.5 
+                bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full 
+                text-white text-xs font-semibold shadow-lg shadow-yellow-500/30
+                animate-pulse whitespace-nowrap">
+                🎯 Looking for Internship
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ✨ SCROLL DOWN ARROW */}
+      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 
+        transition-all duration-700 ${showArrow ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="relative">
+          <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300 
+            hover:scale-110 inline-block">
+            <ChevronDown className="w-8 h-8 animate-bounce-slow" />
+          </a>
+          <div className="absolute inset-0 rounded-full border-2 border-primary-500/30 
+            animate-ping opacity-75" />
+        </div>
+      </div>
+
+      {/* ✨ SPARKLE PARTICLES */}
+      {showParticles && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-primary-400 rounded-full animate-float-up"
+              style={{
+                left: `${Math.random() * 100}%`,
+                bottom: '-10%',
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${3 + Math.random() * 4}s`,
+                opacity: Math.random() * 0.5 + 0.2,
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default Hero;

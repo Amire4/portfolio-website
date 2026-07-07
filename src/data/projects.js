@@ -33,7 +33,7 @@ export const projects = [
     id: 4,
     title: "Portfolio Website - Rana Amir Shahzad",
     description: "A modern, responsive portfolio website built with React and Tailwind CSS. Features dark mode, smooth animations, and interactive UI elements.",
-    image: "/images/portfolio.jpg",
+    image: "/images/portfolio web.jpg",
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com/Amire4/portfolio-website",
     

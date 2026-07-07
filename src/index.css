@@ -481,3 +481,77 @@ nav.scrolled {
     display: -ms-grid;
   }
 }
+
+
+/* ============================================
+   SMOOTH SLIDE ANIMATION - NO JERKS
+   ============================================ */
+
+@keyframes smoothSlide {
+  0% {
+    transform: translateY(-35px);
+  }
+  25% {
+    transform: translateY(-17px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(17px);
+  }
+  100% {
+    transform: translateY(35px);
+  }
+}
+
+.animate-smooth-slide {
+  animation: smoothSlide 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ============================================
+   HERO SECTION - BOTTOM MARGIN FIX
+   ============================================ */
+
+#home {
+  padding-top: 80px;
+  padding-bottom: 50px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  #home {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+}
+
+/* Container spacing */
+.container-custom {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .container-custom {
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+}
+
+/* Hero content spacing */
+.hero-content {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+}

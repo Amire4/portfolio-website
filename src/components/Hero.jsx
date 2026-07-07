@@ -11,7 +11,6 @@ const Hero = () => {
   const [floatingText, setFloatingText] = useState([]);
   const [glowIntensity, setGlowIntensity] = useState(0);
   
-  // ✅ Words with proper spaces
   const words = useMemo(() => ['RANA', 'AMIR', 'SHAHZAD'], []);
   
   const sectionRef = useRef(null);
@@ -26,6 +25,7 @@ const Hero = () => {
   const [showImage, setShowImage] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
+  const [showSkills, setShowSkills] = useState(false); // ✅ Added skills state
 
   const wordIntervalRef = useRef(null);
   const animationTimeoutRef = useRef(null);
@@ -125,7 +125,7 @@ const Hero = () => {
     };
   }, [particles]);
 
-  // ✨ RENDER WORDS FUNCTION - With proper spacing
+  // ✨ RENDER WORDS FUNCTION
   const renderWords = () => {
     const parts = displayText.split(' ');
     return parts.map((word, index) => {
@@ -135,7 +135,6 @@ const Hero = () => {
           key={index} 
           className={`${isLastWord ? 'gradient-text-3d' : 'text-white'} inline-block`}
           style={{ 
-            animationDelay: `${index * 0.3}s`,
             marginRight: index < parts.length - 1 ? '0.5rem' : '0',
           }}
         >
@@ -158,6 +157,7 @@ const Hero = () => {
     setShowImage(false);
     setShowArrow(false);
     setShowParticles(false);
+    setShowSkills(false); // ✅ Reset skills
     
     if (wordIntervalRef.current) {
       clearInterval(wordIntervalRef.current);
@@ -169,7 +169,7 @@ const Hero = () => {
     }
   };
 
-  // ✨ START WORD ANIMATION - With proper spaces
+  // ✨ START WORD ANIMATION
   const startWordAnimation = useCallback(() => {
     let index = 0;
     let currentText = '';
@@ -181,7 +181,6 @@ const Hero = () => {
     
     wordIntervalRef.current = setInterval(() => {
       if (index < words.length) {
-        // ✅ Adding space between words
         currentText = currentText 
           ? `${currentText} ${words[index]}` 
           : words[index];
@@ -197,12 +196,13 @@ const Hero = () => {
           setShowCursor(prev => !prev);
         }, 500);
         
-        setTimeout(() => setShowSubtitle(true), 200);
-        setTimeout(() => setShowDescription(true), 500);
-        setTimeout(() => setShowButtons(true), 800);
-        setTimeout(() => setShowSocial(true), 1100);
-        setTimeout(() => setShowArrow(true), 1400);
-        setTimeout(() => setShowParticles(true), 1600);
+        setTimeout(() => setShowSubtitle(true), 400);
+        setTimeout(() => setShowDescription(true), 800);
+        setTimeout(() => setShowButtons(true), 1200);
+        setTimeout(() => setShowSocial(true), 1600);
+        setTimeout(() => setShowArrow(true), 2000);
+        setTimeout(() => setShowParticles(true), 2200);
+        setTimeout(() => setShowSkills(true), 2500); // ✅ Skills show after 2.5 seconds
         
         animationTimeoutRef.current = cursorTimer;
       }
@@ -223,7 +223,7 @@ const Hero = () => {
       
       setTimeout(() => {
         setShowImage(true);
-      }, 600);
+      }, 800);
       
     }, 100);
   }, [startWordAnimation]);
@@ -270,15 +270,14 @@ const Hero = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [startAllAnimations]);
 
+  // Skills data
+  const skills = ['React', 'JavaScript', 'Python', 'Tailwind CSS', 'Fastapi', 'PostgreSQL'];
+
   return (
     <section 
       id="home" 
       ref={sectionRef}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-950 pt-20 md:pt-28"
-      style={{
-        perspective: '1000px',
-        transformStyle: 'preserve-3d',
-      }}
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-950"
     >
       {/* ✨ CANVAS PARTICLE SYSTEM */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
@@ -316,35 +315,34 @@ const Hero = () => {
 
       {/* ✨ MAIN CONTENT */}
       <div className="container-custom relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12 mt-4 md:mt-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mt-2 md:mt-4">
           
           {/* LEFT CONTENT */}
           <div className="flex-1 text-center md:text-left hero-content">
             
             {/* ✨ HELLO TEXT */}
-            <div className="overflow-hidden relative mb-3">
-              <p className={`text-primary-400 text-lg md:text-xl font-semibold 
+            <div className="overflow-hidden relative mb-2 md:mb-3">
+              <p className={`text-primary-400 text-base md:text-lg lg:text-xl font-semibold 
                 transition-all duration-700 ${showHello ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                flex items-center gap-2 hello-text`}>
-                <Sparkles className={`w-5 h-5 animate-pulse ${showHello ? 'opacity-100' : 'opacity-0'}`} />
+                flex items-center gap-2`}>
+                <Sparkles className={`w-4 h-4 md:w-5 md:h-5 animate-pulse ${showHello ? 'opacity-100' : 'opacity-0'}`} />
                 <span>👋 Hello, I'm</span>
               </p>
             </div>
 
-            {/* ✨ NAME - With proper spacing */}
-            <div className="min-h-[4rem] md:min-h-[5rem] relative name-section">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+            {/* ✨ NAME */}
+            <div className="min-h-[3rem] md:min-h-[4rem] relative">
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4">
                 {displayText ? (
                   <>
                     {renderWords()}
-                    <span className={`inline-block w-1 h-10 md:h-12 bg-primary-400 ml-1 
+                    <span className={`inline-block w-1 h-8 md:h-10 lg:h-12 bg-primary-400 ml-1 
                       ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100
                       animate-pulse`}>
                     </span>
                   </>
                 ) : (
-                  // ✅ Initial placeholder with proper spaces
-                  <span className="text-white tracking-wide">
+                  <span className="text-white tracking-wide text-2xl md:text-4xl lg:text-6xl">
                     RANA AMIR SHAHZAD
                   </span>
                 )}
@@ -357,18 +355,18 @@ const Hero = () => {
             {/* ✨ SUBTITLE */}
             <div className={`overflow-hidden transition-all duration-700 
               ${showSubtitle ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl text-gray-300 mb-6 flex items-center gap-3">
-                <Rocket className={`w-6 h-6 text-primary-400 ${showSubtitle ? 'animate-bounce' : 'opacity-0'}`} />
-                <span>Software Engineering  | Frontend Developer</span>
+              <h2 className="text-lg md:text-2xl lg:text-3xl text-gray-300 mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+                <Rocket className={`w-5 h-5 md:w-6 md:h-6 text-primary-400 ${showSubtitle ? 'animate-bounce' : 'opacity-0'}`} />
+                <span className="text-sm md:text-base lg:text-xl">Software Engineering | Full Stack Developer</span>
               </h2>
             </div>
 
             {/* ✨ DESCRIPTION */}
             <div className={`overflow-hidden transition-all duration-700 
               ${showDescription ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <p className="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
-                <span className="text-primary-400 font-semibold">🎓 Software Engineering student </span> 
-                and <span className="text-purple-400">aspiring Full Stack Developer </span> 
+              <p className="text-gray-400 text-sm md:text-base lg:text-lg mb-4 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                <span className="text-primary-400 font-semibold">🎓 Software Engineer </span> 
+                and <span className="text-purple-400">aspiring Full Stack Developer</span> 
                 with a passion for building <span className="text-cyan-400">scalable web solutions</span>.
                 <br /><br />
                 <span className="text-gray-400">
@@ -382,30 +380,30 @@ const Hero = () => {
                   ✨ Actively seeking internship opportunities ✨
                 </span>
                 <br />
-                <span className="text-gray-500 text-sm">
-                  to kick start my professional journey in the tech industry.
+                <span className="text-gray-500 text-xs md:text-sm">
+                  to kickstart my professional journey in the tech industry.
                 </span>
               </p>
             </div>
 
             {/* ✨ INTERNSHIP BADGE */}
-            <div className={`mb-6 transition-all duration-700 delay-1000 
+            <div className={`mb-4 md:mb-6 transition-all duration-700 delay-1000 
               ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 
+              <div className="inline-flex items-center gap-2 md:gap-3 px-3 py-1.5 md:px-5 md:py-2.5 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 
                 border border-yellow-500/30 rounded-full animate-pulse">
-                <Sparkles className="w-4 h-4 text-yellow-400" />
-                <span className="text-yellow-400 text-sm font-medium">🌟 Open to Internship Opportunities</span>
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
+                <span className="text-yellow-400 text-xs md:text-sm font-medium">🌟 Open to Internship Opportunities</span>
               </div>
             </div>
 
             {/* ✨ BUTTONS */}
-            <div className={`flex flex-wrap gap-4 justify-center md:justify-start transition-all duration-700 
+            <div className={`flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start transition-all duration-700 
               ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
               <a
                 href="#projects"
-                className="group relative px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-500 
+                className="group relative px-6 py-2 md:px-8 md:py-3 bg-gradient-to-r from-primary-600 to-primary-500 
                   rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl 
-                  hover:shadow-primary-500/50 overflow-hidden"
+                  hover:shadow-primary-500/50 overflow-hidden text-sm md:text-base"
               >
                 <span className="relative z-10">View My Work</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
@@ -413,9 +411,9 @@ const Hero = () => {
               </a>
               <a
                 href="#contact"
-                className="group relative px-8 py-3 border-2 border-gray-600 hover:border-primary-500 
+                className="group relative px-6 py-2 md:px-8 md:py-3 border-2 border-gray-600 hover:border-primary-500 
                   rounded-lg transition-all duration-300 hover:scale-110 hover:bg-dark-800/50
-                  overflow-hidden"
+                  overflow-hidden text-sm md:text-base"
               >
                 <span className="relative z-10">Hire Me</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-purple-500/10 
@@ -424,7 +422,7 @@ const Hero = () => {
             </div>
 
             {/* ✨ SOCIAL LINKS */}
-            <div className={`flex gap-4 mt-8 justify-center md:justify-start transition-all duration-700 
+            <div className={`flex gap-3 md:gap-4 mt-6 md:mt-8 justify-center md:justify-start transition-all duration-700 
               ${showSocial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
               {[
                 { icon: Github, link: 'https://github.com/Amire4/dashboard', label: 'GitHub' },
@@ -436,11 +434,11 @@ const Hero = () => {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3 bg-dark-800/50 hover:bg-primary-600 rounded-full 
+                  className="group relative p-2 md:p-3 bg-dark-800/50 hover:bg-primary-600 rounded-full 
                     transition-all duration-300 hover:scale-125 hover:rotate-12 
                     hover:shadow-2xl hover:shadow-primary-500/50"
                 >
-                  <item.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+                  <item.icon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
                   <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-gray-400 
                     opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                     {item.label}
@@ -452,10 +450,10 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* ✨ SKILLS TAGS */}
-            <div className={`flex flex-wrap gap-2 mt-6 justify-center md:justify-start transition-all duration-700 delay-800
-              ${showSocial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              {['React', 'JavaScript', 'Python', 'Tailwind CSS', 'Node.js', 'MongoDB'].map((skill, i) => (
+            {/* ✅ ✨ SKILLS TAGS - ADDED BACK */}
+            <div className={`flex flex-wrap gap-2 mt-6 md:mt-8 justify-center md:justify-start transition-all duration-700
+              ${showSkills ? 'opacity-100 transform translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              {skills.map((skill, i) => (
                 <span
                   key={i}
                   className="px-3 py-1 text-xs bg-dark-800/50 text-gray-400 rounded-full 
@@ -469,37 +467,46 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* ✨ RIGHT - PROFILE IMAGE */}
+          {/* ✨ RIGHT - PROFILE IMAGE - SMOOTH SLIDE */}
           <div className={`flex-1 flex justify-center transition-all duration-1000 
             ${showImage ? 'opacity-100 scale-100' : 'opacity-0 scale-90'} mt-4 md:mt-0`}>
-            <div className="relative group">
+            
+            {/* ✅ PROFILE IMAGE CONTAINER WITH SMOOTH SLIDE */}
+            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 animate-smooth-slide">
+              
+              {/* Glow Effects */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full 
                 blur-3xl opacity-30 animate-pulse scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-full 
                 blur-2xl opacity-20 animate-pulse scale-125" style={{ animationDelay: '2s' }} />
               
+              {/* Rotating Rings */}
               <div className="absolute inset-[-8px] rounded-full border-2 border-primary-500/20 
                 animate-spin-slow" />
               <div className="absolute inset-[-16px] rounded-full border-2 border-purple-500/20 
                 animate-spin-slower" />
               
-              <img
-                src="/images/profile 1.jpg"
-                alt="Rana Amir Shahzad"
-                className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 
-                  rounded-full object-cover border-4 border-primary-500/30 
-                  group-hover:border-primary-500/60 transition-all duration-500 
-                  group-hover:scale-105 group-hover:rotate-3
-                  shadow-2xl shadow-primary-500/20"
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x400/1e293b/60a5fa?text=Rana+Amir';
-                }}
-              />
+              {/* ✅ IMAGE CONTAINER */}
+              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary-500/30 
+                shadow-2xl shadow-primary-500/20">
+                <img
+                  src="/images/profile 5.jpeg"
+                  alt="Rana Amir Shahzad"
+                  className="w-full h-full object-cover object-top"
+                  style={{
+                    objectPosition: '50% 15%',
+                  }}
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/400x400/1e293b/60a5fa?text=Rana+Amir';
+                  }}
+                />
+              </div>
 
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1.5 
+              {/* Internship Badge */}
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 md:px-4 md:py-1.5 
                 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full 
-                text-white text-xs font-semibold shadow-lg shadow-yellow-500/30
-                animate-pulse whitespace-nowrap">
+                text-white text-[10px] md:text-xs font-semibold shadow-lg shadow-yellow-500/30
+                animate-pulse whitespace-nowrap z-10">
                 🎯 Looking for Internship
               </div>
             </div>
@@ -513,7 +520,7 @@ const Hero = () => {
         <div className="relative">
           <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300 
             hover:scale-110 inline-block">
-            <ChevronDown className="w-8 h-8 animate-bounce-slow" />
+            <ChevronDown className="w-6 h-6 md:w-8 md:h-8 animate-bounce-slow" />
           </a>
           <div className="absolute inset-0 rounded-full border-2 border-primary-500/30 
             animate-ping opacity-75" />

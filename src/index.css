@@ -311,7 +311,7 @@ html {
 }
 
 /* ============================================
-   NAVBAR - MAIN
+   NAVBAR
    ============================================ */
 nav {
   position: fixed;
@@ -373,14 +373,14 @@ nav.scrolled {
 }
 
 /* ============================================
-   ALL SECTIONS - SCROLL MARGIN
+   ALL SECTIONS
    ============================================ */
 section[id] {
   scroll-margin-top: 80px;
 }
 
 /* ============================================
-   MOBILE MENU - FULL SCREEN
+   MOBILE MENU
    ============================================ */
 .mobile-menu-overlay {
   position: fixed;
@@ -421,9 +421,6 @@ section[id] {
   transform: scale(1.1) translateX(0.5rem);
 }
 
-/* ============================================
-   PREVENT BODY SCROLL
-   ============================================ */
 body.menu-open {
   overflow: hidden;
 }

@@ -326,7 +326,7 @@ const Hero = () => {
                 transition-all duration-700 ${showHello ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
                 flex items-center gap-2`}>
                 <Sparkles className={`w-4 h-4 md:w-5 md:h-5 animate-pulse ${showHello ? 'opacity-100' : 'opacity-0'}`} />
-                <span>👋 Hello, I'm</span>
+                <span> Hello, I'm</span>
               </p>
             </div>
 
@@ -366,7 +366,7 @@ const Hero = () => {
               ${showDescription ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
               <p className="text-gray-400 text-sm md:text-base lg:text-lg mb-4 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
                 <span className="text-primary-400 font-semibold">🎓 Software Engineer </span> 
-                and <span className="text-purple-400">aspiring Full Stack Developer</span> 
+                and <span className="text-purple-400">aspiring Full Stack Developer </span> 
                 with a passion for building <span className="text-cyan-400">scalable web solutions</span>.
                 <br /><br />
                 <span className="text-gray-400">

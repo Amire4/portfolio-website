@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,9 +10,13 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
-function App() {
+// App content with theme
+const AppContent = () => {
+  const { darkMode } = useTheme();
+
   return (
-    <div className="min-h-screen bg-dark-950 text-white">
+    <div className={`min-h-screen transition-colors duration-300
+      ${darkMode ? 'bg-dark-950 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Navbar />
       <main>
         <Hero />
@@ -24,6 +29,14 @@ function App() {
       <Footer />
       <ScrollToTop />
     </div>
+  );
+};
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

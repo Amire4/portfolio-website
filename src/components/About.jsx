@@ -36,7 +36,7 @@ const About = () => {
     { 
       icon: GraduationCap, 
       label: 'Education', 
-      value: 'BS CS',
+      value: 'BS SE',
       target: 1,
       key: 'education',
       color: 'from-purple-500 to-pink-400',

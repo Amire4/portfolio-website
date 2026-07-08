@@ -42,7 +42,7 @@ const About = () => {
       color: 'from-purple-500 to-pink-400',
       bgColor: 'bg-purple-500/10',
       delay: 300,
-      description: 'Computer Science'
+      description: 'Software Engineering'
     },
     { 
       icon: BookOpen, 
@@ -64,7 +64,7 @@ const About = () => {
       color: 'from-orange-500 to-yellow-400',
       bgColor: 'bg-orange-500/10',
       delay: 700,
-      description: 'Courses & Certifications'
+      description: 'Courses '
     },
   ];
 

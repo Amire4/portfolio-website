@@ -13,8 +13,8 @@ export const skills = {
   // Backend skills - Jo server-side par kaam karte hain
   backend: [
     { name: "Python", level: 75, icon: "🐍" },
-    { name: "MongoDB", level: 80, icon: "🍃" },
-     { name: "ML", level: 80, icon: "🍃" },
+    { name: "PoatgreSQL", level: 80, icon: "🍃" },
+     { name: "ML", level: 80, icon: "🧠" },
     { name: "Firebase", level: 85, icon: "🔥" }
   ],
   

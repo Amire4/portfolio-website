@@ -9,6 +9,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ScrollToBottom from './components/ScrollToBottom';
 
 // App content with theme
 const AppContent = () => {
@@ -28,6 +29,7 @@ const AppContent = () => {
       </main>
       <Footer />
       <ScrollToTop />
+      <ScrollToBottom />
     </div>
   );
 };

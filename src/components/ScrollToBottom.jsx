@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
-const ScrollToTop = () => {
+const ScrollToBottom = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
+      // Jab page ke bottom ke paas ho
+      const bottom = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY < bottom - 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -17,25 +19,24 @@ const ScrollToTop = () => {
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
-  const scrollToTop = () => {
-    console.log('Scroll to top clicked!'); // Debug log
+  const scrollToBottom = () => {
     window.scrollTo({
-      top: 0,
+      top: document.documentElement.scrollHeight,
       behavior: 'smooth'
     });
   };
 
   return (
     <button
-      onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 p-3 bg-primary-600 hover:bg-primary-700 rounded-full 
+      onClick={scrollToBottom}
+      className={`fixed bottom-8 right-8 p-3 bg-purple-600 hover:bg-purple-700 rounded-full 
         transition-all duration-300 z-50 shadow-lg hover:shadow-xl hover:scale-110
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
-      aria-label="Scroll to top"
+      aria-label="Scroll to bottom"
     >
-      <ChevronUp className="w-6 h-6 text-white" />
+      <ChevronDown className="w-6 h-6 text-white" />
     </button>
   );
 };
 
-export default ScrollToTop;
+export default ScrollToBottom;

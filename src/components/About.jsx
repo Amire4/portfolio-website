@@ -64,7 +64,7 @@ const About = () => {
       color: 'from-orange-500 to-yellow-400',
       bgColor: 'bg-orange-500/10',
       delay: 700,
-      description: 'Courses '
+      description: 'Courses'
     },
   ];
 
@@ -139,7 +139,6 @@ const About = () => {
         observer.disconnect();
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAnimated]);
 
   // Reset animation on hash change
@@ -182,7 +181,6 @@ const About = () => {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Function to render stat value
@@ -210,7 +208,7 @@ const About = () => {
             <Sparkles className="w-8 h-8 text-primary-400" />
             About <span className="gradient-text">Me</span>
           </h2>
-          <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-white mb-12 max-w-2xl mx-auto">
             Let me introduce myself and share my journey in the world of technology
           </p>
         </div>
@@ -224,12 +222,12 @@ const About = () => {
                 <Heart className="w-5 h-5 text-red-500 animate-pulse" />
                 <span className="text-primary-400 font-semibold">About Me</span>
               </div>
-              <p className="text-gray-300 text-lg mb-4 leading-relaxed hover:text-white transition-colors duration-300">
-                I'm a <span className="text-primary-400 font-semibold">passionate and dedicated</span> 
-                <span className="text-purple-400 font-semibold"> Web Development </span> 
-                with a strong foundation in <span className="text-cyan-400">modern web technologies</span>. 
-                I love creating <span className="text-green-400">innovative solutions</span> and building 
-                <span className="text-pink-400"> responsive, user-friendly applications</span> that make a difference.
+              <p className="text-white text-lg mb-4 leading-relaxed hover:text-white transition-colors duration-300">
+                I'm a <span className="text-white font-semibold">passionate and dedicated</span> 
+                <span className="text-white font-semibold"> Web Development </span> 
+                with a strong foundation in <span className="text-white">modern web technologies</span>. 
+                I love creating <span className="text-white">innovative solutions</span> and building 
+                <span className="text-white"> responsive, user-friendly applications</span> that make a difference.
               </p>
             </div>
 
@@ -237,15 +235,15 @@ const About = () => {
             <div className={`transform transition-all duration-700 delay-400 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
               <div className="flex items-center gap-2 mb-3">
                 <Rocket className="w-5 h-5 text-primary-400 animate-bounce" />
-                <span className="text-purple-400 font-semibold">Fresher with Fresh Perspective</span>
+                <span className="text-white font-semibold">Fresher with Fresh Perspective</span>
               </div>
-              <p className="text-gray-400 text-lg mb-4 leading-relaxed hover:text-gray-300 transition-colors duration-300">
-                As a <span className="text-yellow-400 font-semibold">fresher</span> in the tech industry, 
+              <p className="text-white text-lg mb-4 leading-relaxed hover:text-gray-300 transition-colors duration-300">
+                As a <span className="text-white font-semibold">fresher</span> in the tech industry, 
                 I bring <span className="text-cyan-400">fresh perspectives</span>, 
                 <span className="text-green-400"> strong problem-solving skills</span>, and a 
-                <span className="text-pink-400"> hunger to learn and grow</span>. 
-                I'm actively seeking <span className="text-primary-400 font-semibold">opportunities</span> 
-                to contribute to <span className="text-purple-400">meaningful projects </span> and build a successful career.
+                <span className="text-white"> hunger to learn and grow</span>. 
+                I'm actively seeking <span className="text-white font-semibold">opportunities</span> 
+                to contribute to <span className="text-white">meaningful projects </span> and build a successful career.
               </p>
             </div>
 
@@ -253,28 +251,28 @@ const About = () => {
             <div className="space-y-3 mt-6">
               <div className={`flex items-center gap-3 group cursor-pointer transform transition-all duration-500 delay-600 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                 <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full group-hover:scale-150 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/50"></div>
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
-                  <span className="text-primary-400 font-medium">Full Stack</span> Development
+                <span className="text-white group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
+                  <span className="text-white font-medium">Full Stack</span> Development
                 </span>
               </div>
               
               <div className={`flex items-center gap-3 group cursor-pointer transform transition-all duration-500 delay-700 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                 <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-400 rounded-full group-hover:scale-150 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/50"></div>
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
+                <span className="text-white group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
                   <span className="text-purple-400 font-medium">Modern Web </span> Technologies
                 </span>
               </div>
               
               <div className={`flex items-center gap-3 group cursor-pointer transform transition-all duration-500 delay-800 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                 <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-400 rounded-full group-hover:scale-150 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/50"></div>
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
+                <span className="text-white group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
                   <span className="text-green-400 font-medium">Responsive</span> UI/UX Design
                 </span>
               </div>
 
               <div className={`flex items-center gap-3 group cursor-pointer transform transition-all duration-500 delay-900 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                 <div className="w-3 h-3 bg-gradient-to-r from-yellow-500 to-orange-400 rounded-full group-hover:scale-150 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-yellow-500/50"></div>
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
+                <span className="text-white group-hover:text-white transition-colors duration-300 group-hover:translate-x-2 inline-block">
                   <span className="text-yellow-400 font-medium">Problem Solving</span> & Innovation
                 </span>
               </div>
@@ -304,7 +302,7 @@ const About = () => {
             </div>
           </div>
           
-          {/* Right Side - Stats with Unique Animations */}
+          {/* ✅ Right Side - Stats with BLUE NUMBERS, WHITE TEXT */}
           <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, index) => {
               return (
@@ -336,15 +334,15 @@ const About = () => {
                       group-hover:scale-110 transition-all duration-500`} />
                   </div>
 
-                  {/* Counter with Animation */}
+                  {/* ✅ Counter with BLUE NUMBERS */}
                   <div className="relative z-10">
-                    <div className="text-4xl font-bold gradient-text mb-1 font-mono group-hover:scale-110 transition-transform duration-300">
+                    <div className="text-4xl font-bold text-primary-400 mb-1 font-mono group-hover:scale-110 transition-transform duration-300">
                       {getStatValue(stat)}
                     </div>
-                    <div className="text-gray-400 text-sm uppercase tracking-wider group-hover:text-gray-300 transition-colors duration-300">
+                    <div className="text-white text-sm uppercase tracking-wider group-hover:text-gray-300 transition-colors duration-300">
                       {stat.label}
                     </div>
-                    <div className="text-gray-500 text-xs mt-1 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="text-white text-xs mt-1 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
                       {stat.description}
                     </div>
                   </div>

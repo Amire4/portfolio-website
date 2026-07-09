@@ -108,7 +108,7 @@ const Contact = () => {
         observer.disconnect();
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Replace with simple comments or remove
   }, [hasAnimated]);
 
   // Reset animation on hash change

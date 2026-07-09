@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Github, Linkedin, Mail, ChevronDown, Sparkles, Rocket } from 'lucide-react';
+import { Github, Linkedin, Mail, Sparkles, Rocket } from 'lucide-react';
 
 const Hero = () => {
   // Word animation states
@@ -23,9 +23,9 @@ const Hero = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
   const [showImage, setShowImage] = useState(false);
-  const [showArrow, setShowArrow] = useState(false);
+  // ❌ REMOVED: const [showArrow, setShowArrow] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
-  const [showSkills, setShowSkills] = useState(false); // ✅ Added skills state
+  const [showSkills, setShowSkills] = useState(false);
 
   const wordIntervalRef = useRef(null);
   const animationTimeoutRef = useRef(null);
@@ -155,9 +155,9 @@ const Hero = () => {
     setShowButtons(false);
     setShowSocial(false);
     setShowImage(false);
-    setShowArrow(false);
+    // ❌ REMOVED: setShowArrow(false);
     setShowParticles(false);
-    setShowSkills(false); // ✅ Reset skills
+    setShowSkills(false);
     
     if (wordIntervalRef.current) {
       clearInterval(wordIntervalRef.current);
@@ -200,9 +200,8 @@ const Hero = () => {
         setTimeout(() => setShowDescription(true), 800);
         setTimeout(() => setShowButtons(true), 1200);
         setTimeout(() => setShowSocial(true), 1600);
-        setTimeout(() => setShowArrow(true), 2000);
         setTimeout(() => setShowParticles(true), 2200);
-        setTimeout(() => setShowSkills(true), 2500); // ✅ Skills show after 2.5 seconds
+        setTimeout(() => setShowSkills(true), 2500);
         
         animationTimeoutRef.current = cursorTimer;
       }
@@ -277,7 +276,7 @@ const Hero = () => {
     <section 
       id="home" 
       ref={sectionRef}
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-950"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-950 px-0 py-0"
     >
       {/* ✨ CANVAS PARTICLE SYSTEM */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
@@ -314,40 +313,40 @@ const Hero = () => {
       ))}
 
       {/* ✨ MAIN CONTENT */}
-      <div className="container-custom relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mt-2 md:mt-4">
+      <div className="container-custom relative z-10 py-0">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-16 py-0">
           
           {/* LEFT CONTENT */}
-          <div className="flex-1 text-center md:text-left hero-content">
+          <div className="flex-1 text-center md:text-left px-2 md:px-0">
             
             {/* ✨ HELLO TEXT */}
-            <div className="overflow-hidden relative mb-2 md:mb-3">
-              <p className={`text-primary-400 text-base md:text-lg lg:text-xl font-semibold 
+            <div className="overflow-hidden relative mb-1 md:mb-3">
+              <p className={`text-primary-400 text-sm md:text-lg lg:text-xl font-semibold 
                 transition-all duration-700 ${showHello ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                flex items-center gap-2`}>
+                flex items-center gap-1 md:gap-2`}>
                 <Sparkles className={`w-4 h-4 md:w-5 md:h-5 animate-pulse ${showHello ? 'opacity-100' : 'opacity-0'}`} />
                 <span> Hello, I'm</span>
               </p>
             </div>
 
             {/* ✨ NAME */}
-            <div className="min-h-[3rem] md:min-h-[4rem] relative">
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4">
+            <div className="min-h-[2.5rem] md:min-h-[4rem] relative">
+              <h1 className="text-2xl md:text-5xl lg:text-7xl font-bold mb-2 md:mb-4">
                 {displayText ? (
                   <>
                     {renderWords()}
-                    <span className={`inline-block w-1 h-8 md:h-10 lg:h-12 bg-primary-400 ml-1 
+                    <span className={`inline-block w-1 h-6 md:h-10 lg:h-12 bg-primary-400 ml-1 
                       ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100
                       animate-pulse`}>
                     </span>
                   </>
                 ) : (
-                  <span className="text-white tracking-wide text-2xl md:text-4xl lg:text-6xl">
+                  <span className="text-white tracking-wide text-xl md:text-4xl lg:text-6xl">
                     RANA AMIR SHAHZAD
                   </span>
                 )}
               </h1>
-              <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary-500 to-purple-500 
+              <div className={`absolute bottom-0 left-0 h-0.5 md:h-1 bg-gradient-to-r from-primary-500 to-purple-500 
                 transition-all duration-1000 ${isVisible ? 'w-full opacity-100' : 'w-0 opacity-0'}`}
                 style={{ transitionDelay: '2s' }} />
             </div>
@@ -355,55 +354,55 @@ const Hero = () => {
             {/* ✨ SUBTITLE */}
             <div className={`overflow-hidden transition-all duration-700 
               ${showSubtitle ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <h2 className="text-lg md:text-2xl lg:text-3xl text-gray-300 mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
-                <Rocket className={`w-5 h-5 md:w-6 md:h-6 text-primary-400 ${showSubtitle ? 'animate-bounce' : 'opacity-0'}`} />
-                <span className="text-sm md:text-base lg:text-xl">Software Engineering | Full Stack Developer</span>
+              <h2 className="text-sm md:text-2xl lg:text-3xl text-gray-300 mb-3 md:mb-6 flex items-center gap-2 md:gap-3">
+                <Rocket className={`w-4 h-4 md:w-6 md:h-6 text-primary-400 ${showSubtitle ? 'animate-bounce' : 'opacity-0'}`} />
+                <span className="text-[10px] sm:text-sm md:text-base lg:text-xl">Software Engineering | Full Stack Developer</span>
               </h2>
             </div>
 
             {/* ✨ DESCRIPTION */}
             <div className={`overflow-hidden transition-all duration-700 
               ${showDescription ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <p className="text-gray-400 text-sm md:text-base lg:text-lg mb-4 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
-                <span className="text-primary-400 font-semibold">🎓 Software Engineer </span> 
-                and <span className="text-purple-400">aspiring Full Stack Developer </span> 
-                with a passion for building <span className="text-cyan-400">scalable web solutions</span>.
-                <br /><br />
-                <span className="text-gray-400">
-                  💡 Proficient in <span className="text-cyan-400">React</span>, 
-                  <span className="text-pink-400"> JavaScript</span>, and 
-                  <span className="text-green-400"> Python</span>. 
-                  <span className="text-gray-500"> Always eager to learn and innovate.</span>
-                </span>
-                <br /><br />
-                <span className="text-yellow-400 font-semibold animate-pulse inline-block">
+              <p className="text-white text-[10px] sm:text-sm md:text-base lg:text-lg mb-3 md:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                <span className="text-primary-400 font-semibold">🎓 Software Engineering student</span>
+                <span className="text-white"> and </span>
+                <span className="text-white font-semibold">aspiring Full Stack Developer</span>
+                <span className="text-white"> with a passion for building </span>
+                <span className="text-white font-semibold">scalable web solutions</span>
+                <span className="text-white">.</span>
+                <br className="hidden sm:block" />
+                <span className="text-white">💡 Proficient in </span>
+                <span className="text-primary-400 font-semibold">React</span>
+                <span className="text-white">, </span>
+                <span className="text-primary-400 font-semibold">JavaScript</span>
+                <span className="text-white">, and </span>
+                <span className="text-primary-400 font-semibold">Python</span>
+                <span className="text-white">. Always eager to learn and innovate.</span>
+                <br className="hidden sm:block" />
+                <span className="text-yellow-400 font-semibold animate-pulse inline-block text-[8px] sm:text-sm">
                   ✨ Actively seeking internship opportunities ✨
-                </span>
-                <br />
-                <span className="text-gray-500 text-xs md:text-sm">
-                  to kickstart my professional journey in the tech industry.
                 </span>
               </p>
             </div>
 
             {/* ✨ INTERNSHIP BADGE */}
-            <div className={`mb-4 md:mb-6 transition-all duration-700 delay-1000 
+            <div className={`mb-3 md:mb-6 transition-all duration-700 delay-1000 
               ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
-              <div className="inline-flex items-center gap-2 md:gap-3 px-3 py-1.5 md:px-5 md:py-2.5 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 
+              <div className="inline-flex items-center gap-1 md:gap-3 px-2 py-1 md:px-5 md:py-2.5 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 
                 border border-yellow-500/30 rounded-full animate-pulse">
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                <span className="text-yellow-400 text-xs md:text-sm font-medium">🌟 Open to Internship Opportunities</span>
+                <Sparkles className="w-2 h-2 md:w-4 md:h-4 text-yellow-400" />
+                <span className="text-[8px] sm:text-xs md:text-sm">🌟 Open to Internship Opportunities</span>
               </div>
             </div>
 
             {/* ✨ BUTTONS */}
-            <div className={`flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start transition-all duration-700 
+            <div className={`flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start transition-all duration-700 
               ${showButtons ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
               <a
                 href="#projects"
-                className="group relative px-6 py-2 md:px-8 md:py-3 bg-gradient-to-r from-primary-600 to-primary-500 
+                className="group relative px-4 py-1.5 md:px-8 md:py-3 bg-gradient-to-r from-primary-600 to-primary-500 
                   rounded-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl 
-                  hover:shadow-primary-500/50 overflow-hidden text-sm md:text-base"
+                  hover:shadow-primary-500/50 overflow-hidden text-[10px] sm:text-sm md:text-base"
               >
                 <span className="relative z-10">View My Work</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
@@ -411,9 +410,9 @@ const Hero = () => {
               </a>
               <a
                 href="#contact"
-                className="group relative px-6 py-2 md:px-8 md:py-3 border-2 border-gray-600 hover:border-primary-500 
+                className="group relative px-4 py-1.5 md:px-8 md:py-3 border-2 border-gray-600 hover:border-primary-500 
                   rounded-lg transition-all duration-300 hover:scale-110 hover:bg-dark-800/50
-                  overflow-hidden text-sm md:text-base"
+                  overflow-hidden text-[10px] sm:text-sm md:text-base"
               >
                 <span className="relative z-10">Hire Me</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-purple-500/10 
@@ -422,7 +421,7 @@ const Hero = () => {
             </div>
 
             {/* ✨ SOCIAL LINKS */}
-            <div className={`flex gap-3 md:gap-4 mt-6 md:mt-8 justify-center md:justify-start transition-all duration-700 
+            <div className={`flex gap-2 md:gap-4 mt-4 md:mt-8 justify-center md:justify-start transition-all duration-700 
               ${showSocial ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-8'}`}>
               {[
                 { icon: Github, link: 'https://github.com/Amire4/dashboard', label: 'GitHub' },
@@ -434,12 +433,12 @@ const Hero = () => {
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-2 md:p-3 bg-dark-800/50 hover:bg-primary-600 rounded-full 
-                    transition-all duration-300 hover:scale-125 hover:rotate-12 
+                  className="group relative p-1.5 md:p-3 bg-dark-800/50 hover:bg-primary-600 rounded-full 
+                    transition-all duration-300 hover:scale-110 md:hover:scale-125 hover:rotate-12 
                     hover:shadow-2xl hover:shadow-primary-500/50"
                 >
-                  <item.icon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-gray-400 
+                  <item.icon className="w-3 h-3 md:w-5 md:h-5 text-gray-400 group-hover:text-white transition-colors duration-300" />
+                  <span className="absolute -top-6 md:-top-8 left-1/2 -translate-x-1/2 text-[8px] md:text-xs text-gray-400 
                     opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                     {item.label}
                   </span>
@@ -450,13 +449,13 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* ✅ ✨ SKILLS TAGS - ADDED BACK */}
-            <div className={`flex flex-wrap gap-2 mt-6 md:mt-8 justify-center md:justify-start transition-all duration-700
+            {/* ✅ ✨ SKILLS TAGS */}
+            <div className={`flex flex-wrap gap-1 md:gap-2 mt-4 md:mt-8 justify-center md:justify-start transition-all duration-700
               ${showSkills ? 'opacity-100 transform translate-y-0' : 'opacity-0 translate-y-8'}`}>
               {skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 text-xs bg-dark-800/50 text-gray-400 rounded-full 
+                  className="px-2 py-0.5 md:px-3 md:py-1 text-[8px] sm:text-[10px] md:text-xs bg-dark-800/50 text-gray-400 rounded-full 
                     border border-gray-700/30 hover:border-primary-500/50 hover:text-primary-400 
                     transition-all duration-300 hover:scale-105 cursor-default"
                   style={{ animationDelay: `${i * 0.1}s` }}
@@ -467,28 +466,27 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* ✨ RIGHT - PROFILE IMAGE - SMOOTH SLIDE */}
+          {/* ✨ RIGHT - PROFILE IMAGE */}
           <div className={`flex-1 flex justify-center transition-all duration-1000 
-            ${showImage ? 'opacity-100 scale-100' : 'opacity-0 scale-90'} mt-4 md:mt-0`}>
+            ${showImage ? 'opacity-100 scale-100' : 'opacity-0 scale-90'} mt-2 md:mt-0`}>
             
-            {/* ✅ PROFILE IMAGE CONTAINER WITH SMOOTH SLIDE */}
-            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 animate-smooth-slide">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 animate-smooth-slide">
               
               {/* Glow Effects */}
               <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full 
-                blur-3xl opacity-30 animate-pulse scale-110" />
+                blur-2xl md:blur-3xl opacity-20 md:opacity-30 animate-pulse scale-110" />
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-full 
-                blur-2xl opacity-20 animate-pulse scale-125" style={{ animationDelay: '2s' }} />
+                blur-xl md:blur-2xl opacity-15 md:opacity-20 animate-pulse scale-125" style={{ animationDelay: '2s' }} />
               
               {/* Rotating Rings */}
-              <div className="absolute inset-[-8px] rounded-full border-2 border-primary-500/20 
+              <div className="absolute inset-[-4px] md:inset-[-8px] rounded-full border border-primary-500/20 
                 animate-spin-slow" />
-              <div className="absolute inset-[-16px] rounded-full border-2 border-purple-500/20 
+              <div className="absolute inset-[-8px] md:inset-[-16px] rounded-full border border-purple-500/20 
                 animate-spin-slower" />
               
               {/* ✅ IMAGE CONTAINER */}
-              <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary-500/30 
-                shadow-2xl shadow-primary-500/20">
+              <div className="relative w-full h-full rounded-full overflow-hidden border-2 md:border-4 border-primary-500/30 
+                shadow-xl md:shadow-2xl shadow-primary-500/20">
                 <img
                   src="/images/profile 5.jpeg"
                   alt="Rana Amir Shahzad"
@@ -503,9 +501,9 @@ const Hero = () => {
               </div>
 
               {/* Internship Badge */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 md:px-4 md:py-1.5 
+              <div className="absolute -bottom-1 md:-bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 md:px-4 md:py-1.5 
                 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full 
-                text-white text-[10px] md:text-xs font-semibold shadow-lg shadow-yellow-500/30
+                text-white text-[6px] md:text-xs font-semibold shadow-lg shadow-yellow-500/30
                 animate-pulse whitespace-nowrap z-10">
                 🎯 Looking for Internship
               </div>
@@ -514,18 +512,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ✨ SCROLL DOWN ARROW */}
-      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 
-        transition-all duration-700 ${showArrow ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="relative">
-          <a href="#about" className="text-gray-400 hover:text-white transition-colors duration-300 
-            hover:scale-110 inline-block">
-            <ChevronDown className="w-6 h-6 md:w-8 md:h-8 animate-bounce-slow" />
-          </a>
-          <div className="absolute inset-0 rounded-full border-2 border-primary-500/30 
-            animate-ping opacity-75" />
-        </div>
-      </div>
+      {/* ❌ SCROLL DOWN ARROW - REMOVED */}
 
       {/* ✨ SPARKLE PARTICLES */}
       {showParticles && (

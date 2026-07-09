@@ -23,7 +23,6 @@ const Hero = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
   const [showImage, setShowImage] = useState(false);
-  // ❌ REMOVED: const [showArrow, setShowArrow] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
   const [showSkills, setShowSkills] = useState(false);
 
@@ -155,7 +154,6 @@ const Hero = () => {
     setShowButtons(false);
     setShowSocial(false);
     setShowImage(false);
-    // ❌ REMOVED: setShowArrow(false);
     setShowParticles(false);
     setShowSkills(false);
     
@@ -316,7 +314,7 @@ const Hero = () => {
       <div className="container-custom relative z-10 py-0">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-16 py-0">
           
-          {/* LEFT CONTENT */}
+          {/* LEFT CONTENT - Text Section */}
           <div className="flex-1 text-center md:text-left px-2 md:px-0">
             
             {/* ✨ HELLO TEXT */}
@@ -466,44 +464,39 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* ✨ RIGHT - PROFILE IMAGE */}
+          {/* ✅ ✨ RIGHT - FULL PORTRAIT IMAGE (NO CIRCLE) */}
           <div className={`flex-1 flex justify-center transition-all duration-1000 
             ${showImage ? 'opacity-100 scale-100' : 'opacity-0 scale-90'} mt-2 md:mt-0`}>
             
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 animate-smooth-slide">
+            {/* ✅ IMAGE CONTAINER - Full Portrait (No Circle) */}
+            <div className="relative w-[220px] sm:w-[280px] md:w-[350px] lg:w-[420px] xl:w-[480px] h-[350px] sm:h-[440px] md:h-[540px] lg:h-[620px] xl:h-[700px] animate-smooth-slide">
               
-              {/* Glow Effects */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 rounded-full 
-                blur-2xl md:blur-3xl opacity-20 md:opacity-30 animate-pulse scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-full 
-                blur-xl md:blur-2xl opacity-15 md:opacity-20 animate-pulse scale-125" style={{ animationDelay: '2s' }} />
+              {/* Glow Effect - Rounded Rectangle */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-purple-500 blur-3xl opacity-20 scale-105 rounded-3xl" />
               
-              {/* Rotating Rings */}
-              <div className="absolute inset-[-4px] md:inset-[-8px] rounded-full border border-primary-500/20 
-                animate-spin-slow" />
-              <div className="absolute inset-[-8px] md:inset-[-16px] rounded-full border border-purple-500/20 
-                animate-spin-slower" />
+              {/* Rotating Rings - Removed (No Circle) */}
+              <div className="absolute inset-[-4px] md:inset-[-8px] rounded-3xl border border-primary-500/10 animate-spin-slow" />
+              <div className="absolute inset-[-8px] md:inset-[-16px] rounded-3xl border border-purple-500/10 animate-spin-slower" />
               
-              {/* ✅ IMAGE CONTAINER */}
-              <div className="relative w-full h-full rounded-full overflow-hidden border-2 md:border-4 border-primary-500/30 
-                shadow-xl md:shadow-2xl shadow-primary-500/20">
+              {/* ✅ IMAGE CONTAINER - Full Portrait */}
+              <div className="relative w-full h-full overflow-hidden rounded-3xl border border-primary-500/20 shadow-2xl shadow-primary-500/10">
                 <img
                   src="/images/profile 5.jpeg"
                   alt="Rana Amir Shahzad"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-contain"
                   style={{
-                    objectPosition: '50% 15%',
+                    objectPosition: "bottom center",
                   }}
                   onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/400x400/1e293b/60a5fa?text=Rana+Amir';
+                    e.target.src = 'https://via.placeholder.com/400x600/1e293b/60a5fa?text=Rana+Amir';
                   }}
                 />
               </div>
 
-              {/* Internship Badge */}
-              <div className="absolute -bottom-1 md:-bottom-2 left-1/2 -translate-x-1/2 px-1.5 py-0.5 md:px-4 md:py-1.5 
+              {/* Internship Badge - Bottom */}
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 md:px-4 md:py-1.5 
                 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full 
-                text-white text-[6px] md:text-xs font-semibold shadow-lg shadow-yellow-500/30
+                text-white text-[8px] md:text-xs font-semibold shadow-lg shadow-yellow-500/30
                 animate-pulse whitespace-nowrap z-10">
                 🎯 Looking for Internship
               </div>
